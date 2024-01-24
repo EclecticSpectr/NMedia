@@ -99,11 +99,11 @@
         android:id="@+id/viewership"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
+        android:layout_marginEnd="50dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_remove_red_eye_24"
         app:layout_constraintBottom_toBottomOf="@+id/shares"
-        app:layout_constraintStart_toEndOf="@+id/shares" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/likesAmount"
@@ -130,9 +130,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/viewership"
+        app:layout_constraintBottom_toBottomOf="@+id/viewership"
         app:layout_constraintStart_toEndOf="@+id/viewership"
-        app:layout_constraintTop_toTopOf="@id/viewership"
+        app:layout_constraintTop_toTopOf="@+id/viewership"
         tools:text="5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
