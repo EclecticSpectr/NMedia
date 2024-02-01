@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toBottomOf="@id/barrier_Top"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@sample/posts_avatars" />
+        app:srcCompat="@drawable/posts_avatars" />
 
     <TextView
         android:id="@+id/author"
