@@ -8,7 +8,8 @@ import ru.netology.nmedia.repository.PostRepositoryImpl
 
 class PostViewModel() : ViewModel() {
     private val repository: PostRepository = PostRepositoryImpl()
-    fun getPost(): LiveData<Post> = repository.getPost()
-    fun likePost(post: Post) = repository.likePost(post)
-    fun sharePost(post: Post) = repository.sharePost(post)
+
+    val data = repository.getAll()
+    fun likeById(id: Long) = repository.likeById(id)
+    fun shareById(id: Long) = repository.shareById(id)
 }
