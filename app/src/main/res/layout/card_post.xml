@@ -12,11 +12,10 @@
         style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:iconTint="@color/menu_tint"
         app:icon="@drawable/baseline_more_vert_24"
+        app:iconTint="@color/menu_tint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatar"
-        />
+        app:layout_constraintTop_toTopOf="@+id/avatar" />
 
     <ImageView
         android:id="@+id/avatar"
@@ -103,7 +102,6 @@
         style="@style/Widget.AppCompat.Buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checkable="false"
         app:icon="@drawable/ic_views_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_Bottom"
