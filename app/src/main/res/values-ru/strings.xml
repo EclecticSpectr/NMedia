@@ -9,4 +9,6 @@
     <string name="edit_message_banner">Редактирование</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
     <string name="netology_banner">Нетология</string>
+    <string name="chooser_share_post">Поделиться</string>
+    <string name="edit_message">Редактирование сообщения</string>
 </resources>
