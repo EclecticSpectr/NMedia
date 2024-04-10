@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.adapter.onListener
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
             if (result.isNullOrBlank()) {
                 Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_LONG).show()
+                viewModel.clear()
             } else viewModel.changeContentAndSave(result)
         }
 
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.add.setOnClickListener {
-            newPostLauncher.launch(null)
+            newPostLauncher.launch("")
         }
     }
 }

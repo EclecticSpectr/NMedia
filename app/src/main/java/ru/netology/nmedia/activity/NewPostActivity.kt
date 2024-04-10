@@ -1,11 +1,13 @@
 package ru.netology.nmedia.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityNewPostBinding
+import ru.netology.nmedia.viewmodel.PostViewModel
 
 class NewPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,11 @@ object NewPostContract : ActivityResultContract<String?, String?>() {
         return intent
     }
 
-    override fun parseResult(resultCode: Int, intent: Intent?) =
-        intent?.getStringExtra(Intent.EXTRA_TEXT)
+    override fun parseResult(resultCode: Int, intent: Intent?): String? {
+        return if (resultCode==Activity.RESULT_OK) {
+            intent?.getStringExtra(Intent.EXTRA_TEXT)
+        } else {
+            null
+        }
+    }
 }
