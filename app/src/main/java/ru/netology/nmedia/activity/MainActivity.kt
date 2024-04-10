@@ -1,20 +1,16 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
-import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.adapter.onListener
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.AndroidUtils
-import ru.netology.nmedia.util.AndroidUtils.focusAndShowKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +25,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_LONG).show()
                 viewModel.clear()
             } else viewModel.changeContentAndSave(result)
-        }
-
-        val intent = Intent().apply {
-            action = Intent.ACTION_VIEW
         }
 
         val adapter = PostsAdapter(object : onListener {
@@ -63,7 +55,15 @@ class MainActivity : AppCompatActivity() {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
-        }, intent)
+
+            override fun onVideo(post: Post) {
+                intent = Intent().apply {
+                    action = Intent.ACTION_VIEW
+                    data = Uri.parse(post.video)
+                }
+                startActivity(intent, null)
+            }
+        })
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
