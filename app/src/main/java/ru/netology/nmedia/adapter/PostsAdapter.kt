@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
-import kotlin.math.floor
+import ru.netology.nmedia.util.amountShow
 
 interface onListener {
     fun onLike(post: Post)
@@ -86,15 +86,6 @@ class PostViewHolder(
         }
     }
 }
-
-private fun amountShow(number: Int): String =
-    when {
-        number >= 1_000_000 && (number / 100_000) % 10 == 0 -> (number / 1_000_000).toString() + "M"
-        number >= 1_000_000 -> (floor(number.toDouble() / 100_000) / 10).toString() + "M"
-        number >= 10_000 || (number >= 1_000 && (number / 100) % 10 == 0) -> (number / 1_000).toString() + "K"
-        number >= 1_000 -> (floor(number.toDouble() / 100) / 10).toString() + "K"
-        else -> number.toString()
-    }
 
 object PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id
