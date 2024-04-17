@@ -18,6 +18,7 @@ interface onListener {
     fun onRemove(post: Post)
     fun onEdit(post: Post)
     fun onVideo(post: Post)
+    fun onPost(post: Post)
 }
 
 class PostsAdapter(private val listener: onListener) :
@@ -63,6 +64,11 @@ class PostViewHolder(
                 preview.visibility = View.GONE
                 play.visibility = View.GONE
             }
+
+            binding.root.setOnClickListener {
+                listener.onPost(post)
+            }
+
             menuButton.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)

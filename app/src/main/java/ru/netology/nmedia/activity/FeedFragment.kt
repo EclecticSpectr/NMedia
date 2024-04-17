@@ -10,21 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.adapter.onListener
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.*
 import ru.netology.nmedia.viewmodel.PostViewModel
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 class FeedFragment : Fragment() {
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
-
-    companion object {
-        var Bundle.textArg: String? by AndroidUtils.StringArg
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +73,15 @@ class FeedFragment : Fragment() {
                 }
                 startActivity(intent, null)
             }
+
+            override fun onPost(post: Post) {
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_postFragment,
+                    Bundle().apply {
+                        idArg = post.id.toInt()
+                    }
+                )
+            }
         })
 
         binding.list.adapter = adapter
@@ -88,8 +95,23 @@ class FeedFragment : Fragment() {
         }
 
         binding.add.setOnClickListener {
+            viewModel.clear()
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
         return binding.root
+    }
+
+    companion object {
+        var Bundle.idArg: Int by IntArg
+    }
+
+    object IntArg : ReadWriteProperty<Bundle, Int> {
+        override fun getValue(thisRef: Bundle, property: KProperty<*>): Int {
+            return thisRef.getInt(property.name)
+        }
+
+        override fun setValue(thisRef: Bundle, property: KProperty<*>, value: Int) {
+            thisRef.putInt(property.name, value)
+        }
     }
 }

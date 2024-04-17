@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.FeedFragment.Companion.idArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.adapter.PostViewHolder
+import ru.netology.nmedia.adapter.onListener
+import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.util.amountShow
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.databinding.FragmentPostBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.CompanionArg.Companion.longArg
-import ru.netology.nmedia.util.CompanionArg.Companion.textArg
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class PostFragment : Fragment() {
@@ -29,12 +32,13 @@ class PostFragment : Fragment() {
     ): View {
         val binding = FragmentPostBinding.inflate(inflater, container, false)
         val viewModel: PostViewModel by viewModels(::requireParentFragment)
-        val id = arguments?.longArg
+        val id = arguments?.idArg
 
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             binding.postContent.apply {
                 posts.map { post ->
-                    if (post.id == id) {
+                    if (post.id.toInt() == id) {
+
                         author.text = post.author
                         published.text = post.published
                         content.text = post.content
@@ -59,34 +63,34 @@ class PostFragment : Fragment() {
                                 preview.visibility = View.GONE
                                 play.visibility = View.GONE
                             }
-                            menuButton.setOnClickListener {
-                                androidx.appcompat.widget.PopupMenu(it.context, it).apply {
-                                    inflate(R.menu.options_post)
-                                    setOnMenuItemClickListener { item ->
-                                        when (item.itemId) {
-                                            R.id.remove -> {
-                                                viewModel.removeById(post.id)
-                                                findNavController().navigate(R.id.action_postFragment_to_feedFragment)
-                                                findNavController().navigateUp()
-                                                true
-                                            }
-
-                                            R.id.edit -> {
-                                                viewModel.edit(post)
-                                                findNavController().navigate(R.id.action_postFragment_to_newPostFragment,
-                                                    Bundle().apply
-                                                    {
-                                                        textArg = post.content
-                                                    }
-                                                )
-                                                true
-                                            }
-
-                                            else -> false
+                        }
+                        menuButton.setOnClickListener {
+                            androidx.appcompat.widget.PopupMenu(it.context, it).apply {
+                                inflate(R.menu.options_post)
+                                setOnMenuItemClickListener { item ->
+                                    when (item.itemId) {
+                                        R.id.remove -> {
+                                            viewModel.removeById(post.id)
+                                            findNavController().navigateUp()
+                                            true
                                         }
+
+                                        R.id.edit -> {
+                                            viewModel.edit(post)
+                                            findNavController().navigate(
+                                                R.id.action_postFragment_to_newPostFragment,
+                                                Bundle().apply
+                                                {
+                                                    textArg = post.content
+                                                }
+                                            )
+                                            true
+                                        }
+
+                                        else -> false
                                     }
-                                }.show()
-                            }
+                                }
+                            }.show()
                         }
                     }
                 }
