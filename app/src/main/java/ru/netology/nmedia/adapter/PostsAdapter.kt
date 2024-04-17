@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
-import kotlin.math.floor
+import ru.netology.nmedia.util.amountShow
 
 interface onListener {
     fun onLike(post: Post)
@@ -18,6 +18,7 @@ interface onListener {
     fun onRemove(post: Post)
     fun onEdit(post: Post)
     fun onVideo(post: Post)
+    fun onPost(post: Post)
 }
 
 class PostsAdapter(private val listener: onListener) :
@@ -63,6 +64,11 @@ class PostViewHolder(
                 preview.visibility = View.GONE
                 play.visibility = View.GONE
             }
+
+            binding.root.setOnClickListener {
+                listener.onPost(post)
+            }
+
             menuButton.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
@@ -86,15 +92,6 @@ class PostViewHolder(
         }
     }
 }
-
-private fun amountShow(number: Int): String =
-    when {
-        number >= 1_000_000 && (number / 100_000) % 10 == 0 -> (number / 1_000_000).toString() + "M"
-        number >= 1_000_000 -> (floor(number.toDouble() / 100_000) / 10).toString() + "M"
-        number >= 10_000 || (number >= 1_000 && (number / 100) % 10 == 0) -> (number / 1_000).toString() + "K"
-        number >= 1_000 -> (floor(number.toDouble() / 100) / 10).toString() + "K"
-        else -> number.toString()
-    }
 
 object PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id
