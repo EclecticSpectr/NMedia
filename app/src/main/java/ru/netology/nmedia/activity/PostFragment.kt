@@ -24,7 +24,6 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 class PostFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
