@@ -11,4 +11,10 @@
     <string name="netology_banner">Нетология</string>
     <string name="chooser_share_post">Поделиться</string>
     <string name="edit_message">Редактирование сообщения</string>
+    <string name="channel_remote_name">Сервер уведомлений</string>
+    <string name="channel_remote_description">Уведомление от сервера</string>
+    <string name="notification_user_liked">%1$s поставил лайк посту %2$s</string>
+    <string name="notification_new_post">%1$s разместил новый пост %2$s</string>
+    <string name="notification_unknown">Неизвестное сообщение</string>
+    <string name="google_play_unavailable">Google Api Недоступно</string>
 </resources>
